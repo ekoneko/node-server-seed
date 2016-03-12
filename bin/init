@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+var env = require('node-env-file');
+env('.env');
+process.env.INITDB = 1;
+var db = require('../code/services/db.js');
+db.init().then(function () {
+    console.log('installed database success');
+    process.exit();
+});
+

@@ -1,0 +1,21 @@
+#! /bin/bash
+dirname="$(pwd)"
+
+case "$1" in
+  start)
+    command="start"
+    ;;
+  stop)
+    command="stop"
+    ;;
+  restart|reload)
+    command="restart"
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart|reload}"
+    exit 1
+esac
+
+
+eval "pm2 $command $dirname/bin/www  -i 4 --name 'server-seed' --restart-delay 30000"
+
