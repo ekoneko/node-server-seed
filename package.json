@@ -17,6 +17,7 @@
     "require-dir": "^0.3.0",
     "sequelize": "^3.6.0",
     "serve-favicon": "~2.3.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "node-env-file": "^0.1.8"
   }
 }

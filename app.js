@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 /**
  * Load environment
@@ -24,13 +25,12 @@ var app = express();
 if (process.env.DEV) {
     var logger = require('morgan');
     app.use(logger('dev'));
-    var AsyncProfile = require('async-profile')
-    var p = new AsyncProfile();
 }
 
 /**
  * webpack
  */
+/*
 var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
@@ -42,23 +42,26 @@ app.use(webpackDevMiddleware(compiler, {
     publicPath: '/'
 }));
 app.use(webpackHotMiddleware(compiler, {}));
+*/
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(cookieParser());
 
 app.use('/', routes);
 
 // view engine setup
+/*
 var hbs = require('express-hbs');
 app.engine('hbs', hbs.express3({
     partialsDir: path.join(__dirname, 'code/views'),
 }));
-
 app.set('views', path.join(__dirname, 'code/views'));
 app.set('view engine', 'hbs');
+*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
