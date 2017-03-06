@@ -1,28 +1,31 @@
-var Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
 module.exports = {
-    attributes: {
-        id: {
-            type: Sequelize.INTEGER.UNSIGNED,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        name: {
-            type: Sequelize.STRING(16),
-            allowNull: false,
-            defaultValue: '',
-            comment: "name"
-        },
-        value: {
-            type: Sequelize.STRING(100),
-            allowNull: false,
-            defaultValue: '',
-            comment: "value"
-        }
+  name: 'posts',
+  attributes: {
+    title: {
+      type: Sequelize.STRING(120),
+      allowNull: false
     },
-    options: {
-        indexes: [
-            {fields: ['name']},
-        ]
+    summary: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      defaultValue: ''
+    },
+    content: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      defaultValue: ''
+    },
+    userId: {
+      type: Sequelize.INTEGER(5),
+      allowNull: false,
+      defaultValue: 0,
+      field: 'user_id'
     }
-}
+  },
+  options: {
+    indexes: []
+  }
+};
+

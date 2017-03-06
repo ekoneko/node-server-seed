@@ -1,3 +1,6 @@
-this.ping = function (req, res, next) {
-    res.send('pong');
+'use strict';
+
+module.exports.test = async ctx => {
+  ctx.body = 'test';
+  // or ctx.body = await somethingAsync();
 }
