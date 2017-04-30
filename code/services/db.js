@@ -82,6 +82,15 @@ class DB {
   model(name) {
     return this.sequelize.model(name);
   }
+
+  /**
+   * create a transaction
+   * @param func
+   * @return {Promise}
+   */
+  transaction(func) {
+    return this.sequelize.transaction(t => func(t))
+  }
 }
 
 module.exports = DB;
