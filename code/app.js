@@ -7,6 +7,7 @@ const Koa = require('koa');
 const path = require('path');
 const app = module.exports = new Koa();
 const DB = require('./services/db');
+const getCache = require('./services/cache');
 
 // init db on start
 DB.createInstance({
@@ -15,6 +16,16 @@ DB.createInstance({
   password: process.env.DATABASE_PASS,
   host: process.env.DATABASE_HOST,
   dialect: process.env.DATABASE_DIALECT
+});
+
+// init default redis on start
+getCache({
+  host: process.env.CACHE_HOST,
+  port: process.env.CACHE_POST,
+  path: process.env.CACHE_PATH,
+  connect_timeout: process.env.CACHE_TIMEOUT,
+  password: process.env.CACHE_PASSWORD || undefined,
+  db: process.env.CACHE_DB || undefined,
 });
 
 const router = require('./router');

@@ -1,7 +1,7 @@
 'use strict';
 
 const crypto = require('crypto');
-const client = require('redis').createClient();
+const getCache = require('./cache');
 
 const defaultOptions = {
   schema: '',
@@ -23,7 +23,8 @@ function generateSid() {
 }
 
 class SessionManager {
-  constructor(options) {
+  constructor(options, cacheConfig = {}) {
+    this.client = getCache(cacheConfig.options, cacheConfig.name);
     this.options = Object.assign({}, defaultOptions, options);
   }
   /**
@@ -36,10 +37,10 @@ class SessionManager {
     const key = this.options.schema + sid;
     const dataString = JSON.stringify(data);
     return new Promise((resolve, reject) => {
-      client.set(key, dataString, err => {
+      this.client.set(key, dataString, err => {
         err ? reject(err) : resolve(sid);
       });
-      client.expire(key, this.options.expireSecond);
+      this.client.expire(key, this.options.expireSecond);
     });
   }
 
@@ -50,7 +51,7 @@ class SessionManager {
   get(sid) {
     const key = this.options.schema + sid;
     return new Promise((resolve, reject) => {
-      client.get(key, (err, data) => {
+      this.client.get(key, (err, data) => {
         err ? reject(err) : resolve(JSON.parse(data));
       });
     });
@@ -63,7 +64,7 @@ class SessionManager {
   rm(sid) {
     const key = this.options.schema + sid;
     return new Promise((resolve, reject) => {
-      client.del(key, (err, data) => {
+      this.client.del(key, (err, data) => {
         err ? reject(err) : resolve(JSON.parse(data));
       });
     });
