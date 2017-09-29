@@ -39,7 +39,7 @@ The `scripts` directory support some CLI scripts. Like create database by your m
 
 ## Dry Run
 
-Cope `.env.example` to `.env`, and configure it.
+Copy `.env.example` to `.env`, and configure it.
 
 `npm start`
 
